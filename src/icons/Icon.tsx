@@ -1,4 +1,5 @@
 import CartIcon from "./CartIcon";
+import CloseIcon from "./CloseIcon";
 import DownArrowIcon from "./DownArrowIcon";
 import EyeOff from "./EyeOff";
 import EyeOn from "./EyeOn";
@@ -14,7 +15,8 @@ export type IconType =
   | "EyeOff"
   | "CartIcon"
   | "DownArrowIcon"
-  | "FilterIcon";
+  | "FilterIcon"
+  | "CloseIcon";
 
 const iconMap = {
   LogoIcon,
@@ -24,6 +26,7 @@ const iconMap = {
   CartIcon,
   DownArrowIcon,
   FilterIcon,
+  CloseIcon,
 };
 
 interface GeneralIconProps extends IconProps {

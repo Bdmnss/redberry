@@ -45,7 +45,7 @@ export default function Home() {
 
   return (
     <main className="px-24 py-16">
-      <div className="flex items-center justify-between">
+      <div className="mb-5 flex items-center justify-between">
         <h1 className="text-primaryText text-4xl font-semibold">Products</h1>
         <div className="flex items-center">
           <p className="text-secondaryText border-r-borderColor border-r pr-8 text-xs">
@@ -132,6 +132,29 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {(priceFrom || priceTo) && (
+        <div className="border-borderColor inline-flex items-center rounded-full border bg-white px-4 py-2">
+          <p>
+            Price:{" "}
+            {priceFrom ? <span>From {priceFrom} </span> : <span>From 0 </span>}
+            {priceTo && <span>To {priceTo} </span>}
+          </p>
+          <button
+            onClick={() => {
+              setPriceFrom("");
+              setPriceTo("");
+              setSearchParams((prev) => {
+                const params = new URLSearchParams(prev);
+                params.delete("filter[price_from]");
+                params.delete("filter[price_to]");
+                return params;
+              });
+            }}
+          >
+            <Icon type="CloseIcon" className="ml-2 size-5" />
+          </button>
+        </div>
+      )}
     </main>
   );
 }
