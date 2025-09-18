@@ -1,10 +1,14 @@
 import { useForm } from "react-hook-form";
+import { useRef, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AuthLayout from "../layout/AuthLayout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
+
 import Button from "../components/Button";
+import { useMutation } from "@tanstack/react-query";
+import { registerUser, type RegisterPayload } from "../api/auth";
 
 export default function Register() {
   const schema = z
@@ -29,19 +33,66 @@ export default function Register() {
     resolver: zodResolver(schema),
   });
 
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: (payload: RegisterPayload) => registerUser(payload),
+    onSuccess: (data) => {
+      if (data?.token) {
+        localStorage.setItem("token", data.token);
+      }
+      navigate("/");
+      console.log("Registration successful", data);
+    },
+    onError: (error) => {
+      console.error("Registration error", error);
+    },
+  });
+
+  const [avatar, setAvatar] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const onSubmit = (data: FormData) => {
-    console.log(data);
+    mutation.mutate({
+      email: data.email,
+      username: data.username,
+      password: data.password,
+      password_confirmation: data.confirmPassword,
+      avatar,
+    });
   };
 
   return (
     <AuthLayout title="Registration">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-12">
         <div className="flex items-center gap-4">
-          <img src="/profile-image.png" alt="profile image" />
-          <button type="button" className="text-secondaryText">
+          <img
+            src={avatar ? URL.createObjectURL(avatar) : "/profile-image.png"}
+            alt="profile image"
+            className="size-24 rounded-full object-cover"
+          />
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0] || null;
+              setAvatar(file);
+            }}
+          />
+          <button
+            type="button"
+            className="text-secondaryText"
+            onClick={() => fileInputRef.current?.click()}
+          >
             Upload new
           </button>
-          <button type="button" className="text-secondaryText">
+          <button
+            type="button"
+            className="text-secondaryText"
+            onClick={() => setAvatar(null)}
+            disabled={!avatar}
+          >
             Remove
           </button>
         </div>
@@ -74,7 +125,9 @@ export default function Register() {
         </div>
 
         <div className="flex flex-col items-center gap-6">
-          <Button>Register</Button>
+          <Button disabled={mutation.isPending}>
+            {mutation.isPending ? "Registering..." : "Register"}
+          </Button>
           <p className="text-secondaryText">
             Already member?{" "}
             <Link to="/login" className="text-buttonColor">
