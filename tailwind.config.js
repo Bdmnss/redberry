@@ -8,6 +8,9 @@ export default {
       },
       colors: {
         primaryText: "#10151F",
+        secondaryText: "#3E424A",
+        borderColor: "#E1DFE1",
+        buttonColor: "#FF4000",
       },
     },
   },
