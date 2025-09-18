@@ -31,6 +31,12 @@ export default function Login() {
       if (data?.token) {
         localStorage.setItem("token", data.token);
       }
+      if (data?.user?.avatar) {
+        localStorage.setItem("avatar", data.user.avatar);
+      }
+      if (data?.user?.username) {
+        localStorage.setItem("username", data.user.username);
+      }
       navigate("/");
     },
     onError: (error) => {

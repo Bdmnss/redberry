@@ -1,3 +1,5 @@
+import axiosInstance from "../utils/axiosInstance";
+
 export interface LoginPayload {
   email: string;
   password: string;
@@ -7,7 +9,6 @@ export async function loginUser(payload: LoginPayload) {
   const response = await axiosInstance.post("/login", payload);
   return response.data;
 }
-import axiosInstance from "../utils/axiosInstance";
 
 export interface RegisterPayload {
   email: string;
