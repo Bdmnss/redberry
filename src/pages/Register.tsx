@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 import { useRef, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AuthLayout from "../layout/AuthLayout";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
-
 import Button from "../components/Button";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser, type RegisterPayload } from "../api/auth";
@@ -34,6 +34,12 @@ export default function Register() {
   });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/", { replace: true });
+    }
+  }, [navigate]);
   const mutation = useMutation({
     mutationFn: (payload: RegisterPayload) => registerUser(payload),
     onSuccess: (data) => {

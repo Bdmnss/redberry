@@ -1,8 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 import Icon from "../icons/Icon";
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const isLogin = location.pathname === "/login";
   const isLoggedIn = Boolean(localStorage.getItem("token"));
   let avatarUrl = null;
@@ -18,13 +22,35 @@ const Header = () => {
       }
     }
   }
+
+  useEffect(() => {
+    if (!dropdownOpen) return;
+    function handleClick(e: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [dropdownOpen]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("avatar");
+    localStorage.removeItem("username");
+    setDropdownOpen(false);
+    navigate("/login");
+  };
   return (
     <header className="flex items-center justify-between px-24 py-7">
       <Icon type="LogoIcon" />
       {isLoggedIn ? (
         <div className="flex items-center gap-5">
           <Icon type="CartIcon" />
-          <div className="flex items-center gap-1">
+          <div className="relative flex items-center gap-1" ref={dropdownRef}>
             {avatarUrl ? (
               <img
                 src={avatarUrl}
@@ -36,7 +62,24 @@ const Header = () => {
                 {userInitial}
               </div>
             )}
-            <Icon type="DownArrowIcon" />
+            <button
+              type="button"
+              className="flex items-center justify-center focus:outline-none"
+              onClick={() => setDropdownOpen((v) => !v)}
+              aria-label="Open profile menu"
+            >
+              <Icon type="DownArrowIcon" />
+            </button>
+            {dropdownOpen && (
+              <div className="animate-fade-in absolute right-0 top-12 z-20 min-w-[120px] rounded-lg border border-gray-100 bg-white py-2 shadow-lg">
+                <button
+                  className="text-buttonColor w-full px-4 py-2 text-left text-sm font-medium transition-colors hover:bg-gray-50"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </div>
       ) : isLogin ? (

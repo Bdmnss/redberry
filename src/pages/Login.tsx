@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import AuthLayout from "../layout/AuthLayout";
@@ -25,6 +26,12 @@ export default function Login() {
   });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/", { replace: true });
+    }
+  }, [navigate]);
   const mutation = useMutation({
     mutationFn: (payload: LoginPayload) => loginUser(payload),
     onSuccess: (data) => {
