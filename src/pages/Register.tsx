@@ -41,7 +41,6 @@ export default function Register() {
         localStorage.setItem("token", data.token);
       }
       navigate("/");
-      console.log("Registration successful", data);
     },
     onError: (error) => {
       console.error("Registration error", error);

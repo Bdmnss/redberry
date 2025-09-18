@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import AuthLayout from "../layout/AuthLayout";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser, type LoginPayload } from "../api/auth";
 
 export default function Login() {
   const schema = z.object({
@@ -22,8 +24,25 @@ export default function Login() {
     resolver: zodResolver(schema),
   });
 
+  const navigate = useNavigate();
+  const mutation = useMutation({
+    mutationFn: (payload: LoginPayload) => loginUser(payload),
+    onSuccess: (data) => {
+      if (data?.token) {
+        localStorage.setItem("token", data.token);
+      }
+      navigate("/");
+    },
+    onError: (error) => {
+      console.error("Login error", error);
+    },
+  });
+
   const onSubmit = (data: FormData) => {
-    console.log(data);
+    mutation.mutate({
+      email: data.email,
+      password: data.password,
+    });
   };
 
   return (
@@ -45,7 +64,9 @@ export default function Login() {
         </div>
 
         <div className="flex flex-col items-center gap-6">
-          <Button>Login</Button>
+          <Button disabled={mutation.isPending}>
+            {mutation.isPending ? "Logging in..." : "Login"}
+          </Button>
           <p className="text-secondaryText">
             Not a member?{" "}
             <Link to="/register" className="text-buttonColor">
