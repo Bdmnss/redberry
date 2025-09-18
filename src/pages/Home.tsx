@@ -6,8 +6,15 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import { useSearchParams } from "react-router-dom";
 
+const SORT_OPTIONS = [
+  { value: "created_at", label: "New products first" },
+  { value: "price", label: "Price, low to high" },
+  { value: "-price", label: "Price, high to low" },
+];
+
 export default function Home() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isSortOpen, setIsSortOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [priceFrom, setPriceFrom] = useState<string>(
     searchParams.get("filter[price_from]") || "",
@@ -15,23 +22,26 @@ export default function Home() {
   const [priceTo, setPriceTo] = useState<string>(
     searchParams.get("filter[price_to]") || "",
   );
+  const [sortLabel, setSortLabel] = useState("Sort by");
 
   const priceFromParam = searchParams.get("filter[price_from]") || "";
   const priceToParam = searchParams.get("filter[price_to]") || "";
+  const sortParam = searchParams.get("sort") || "";
 
   const { data, error, isLoading } = useQuery({
-    queryKey: ["products", priceFromParam, priceToParam],
+    queryKey: ["products", priceFromParam, priceToParam, sortParam],
     queryFn: () =>
       getProducts({
         price_from: priceFromParam ? Number(priceFromParam) : undefined,
         price_to: priceToParam ? Number(priceToParam) : undefined,
+        sort: sortParam || undefined,
       }),
   });
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {(error as Error).message}</div>;
 
-  console.log("Products:", data);
+  //   console.log("Products:", data);
 
   return (
     <main className="px-24 py-16">
@@ -89,11 +99,36 @@ export default function Home() {
             )}
           </div>
 
-          <div>
-            <button className="flex items-center gap-1">
-              <span className="text-primaryText">Sort by</span>
+          <div className="relative">
+            <button
+              className="flex items-center gap-1"
+              onClick={() => setIsSortOpen(!isSortOpen)}
+            >
+              <span className="text-primaryText">{sortLabel}</span>
               <Icon type="DownArrowIcon" />
             </button>
+            {isSortOpen && (
+              <div className="border-borderColor absolute right-0 top-9 flex w-56 flex-col gap-2 rounded-lg border py-4">
+                <h3 className="text-primaryText pl-4 font-semibold">Sort by</h3>
+                {SORT_OPTIONS.map((option) => (
+                  <button
+                    key={option.value}
+                    className="py-1 pl-4 text-left hover:bg-gray-100"
+                    onClick={() => {
+                      setSearchParams((prev) => {
+                        const params = new URLSearchParams(prev);
+                        params.set("sort", option.value);
+                        return params;
+                      });
+                      setSortLabel(option.label);
+                      setIsSortOpen(false);
+                    }}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
