@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import { useRef, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,21 +8,24 @@ import AuthLayout from "../layout/AuthLayout";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { useMutation } from "@tanstack/react-query";
-import { registerUser, type RegisterPayload } from "../api/auth";
+import { useRegisterMutation } from "../api/useAuth";
+import Icon from "../icons/Icon";
+
+const schema = z
+  .object({
+    username: z.string().min(2, "Username is required"),
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 export default function Register() {
-  const schema = z
-    .object({
-      username: z.string().min(2, "Username is required"),
-      email: z.string().email("Invalid email address"),
-      password: z.string().min(6, "Password must be at least 6 characters"),
-      confirmPassword: z.string(),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      message: "Passwords do not match",
-      path: ["confirmPassword"],
-    });
+  const [avatar, setAvatar] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   type FormData = z.infer<typeof schema>;
 
@@ -40,27 +44,8 @@ export default function Register() {
       navigate("/", { replace: true });
     }
   }, [navigate]);
-  const mutation = useMutation({
-    mutationFn: (payload: RegisterPayload) => registerUser(payload),
-    onSuccess: (data) => {
-      if (data?.token) {
-        localStorage.setItem("token", data.token);
-      }
-      if (data?.user?.avatar) {
-        localStorage.setItem("avatar", data.user.avatar);
-      }
-      if (data?.user?.username) {
-        localStorage.setItem("username", data.user.username);
-      }
-      navigate("/");
-    },
-    onError: (error) => {
-      console.error("Registration error", error);
-    },
-  });
 
-  const [avatar, setAvatar] = useState<File | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const mutation = useRegisterMutation();
 
   const onSubmit = (data: FormData) => {
     mutation.mutate({
@@ -74,13 +59,24 @@ export default function Register() {
 
   return (
     <AuthLayout title="Registration">
+      <Toaster position="top-right" />
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-12">
         <div className="flex items-center gap-4">
-          <img
-            src={avatar ? URL.createObjectURL(avatar) : "/profile-image.png"}
-            alt="profile image"
-            className="size-24 rounded-full object-cover"
-          />
+          {avatar ? (
+            <img
+              src={URL.createObjectURL(avatar)}
+              alt="profile image"
+              className="size-24 rounded-full object-cover"
+            />
+          ) : (
+            <div
+              className="border-borderColor hover:border-buttonColor flex size-24 cursor-pointer items-center justify-center rounded-full border"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <Icon type="CameraIcon" />
+            </div>
+          )}
+
           <input
             type="file"
             accept="image/*"
