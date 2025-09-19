@@ -47,9 +47,9 @@ export default function HeaderFilters({
   }, [isFilterOpen, isSortOpen]);
 
   return (
-    <>
+    <div className="mb-8">
       <div className="mb-5 flex items-center justify-between">
-        <h1 className="text-primaryText text-4xl font-semibold">Products</h1>
+        <h1 className="text-4xl font-semibold">Products</h1>
         <div className="flex items-center">
           <p className="text-secondaryText border-r-borderColor border-r pr-8 text-xs">
             Showing {from}-{to} of {total} results
@@ -60,7 +60,7 @@ export default function HeaderFilters({
               onClick={() => setIsFilterOpen(!isFilterOpen)}
             >
               <Icon type="FilterIcon" />
-              <span className="text-primaryText">Filter</span>
+              <span>Filter</span>
             </button>
             {isFilterOpen && (
               <PriceFilterForm
@@ -80,7 +80,7 @@ export default function HeaderFilters({
               className="flex items-center gap-1"
               onClick={() => setIsSortOpen(!isSortOpen)}
             >
-              <span className="text-primaryText">{sortLabel}</span>
+              <span>{sortLabel}</span>
               <Icon type="DownArrowIcon" />
             </button>
             {isSortOpen && (
@@ -103,6 +103,6 @@ export default function HeaderFilters({
           setSearchParams={setSearchParams}
         />
       )}
-    </>
+    </div>
   );
 }

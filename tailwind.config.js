@@ -11,6 +11,8 @@ export default {
         secondaryText: "#3E424A",
         borderColor: "#E1DFE1",
         buttonColor: "#FF4000",
+        grey: "#F8F6F7",
+        darkGrey: "#212B36",
       },
     },
   },

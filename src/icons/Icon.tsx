@@ -6,7 +6,9 @@ import EyeOff from "./EyeOff";
 import EyeOn from "./EyeOn";
 import FilterIcon from "./FilterIcon";
 import type { IconProps } from "./iconType";
+import LeftArrowIcon from "./LeftArrowIcon";
 import LogoIcon from "./LogoIcon";
+import RightArrowIcon from "./RightArrowIcon";
 import UserIcon from "./UserIcon";
 
 export type IconType =
@@ -18,7 +20,9 @@ export type IconType =
   | "DownArrowIcon"
   | "FilterIcon"
   | "CloseIcon"
-  | "CameraIcon";
+  | "CameraIcon"
+  | "LeftArrowIcon"
+  | "RightArrowIcon";
 
 const iconMap = {
   LogoIcon,
@@ -30,6 +34,8 @@ const iconMap = {
   FilterIcon,
   CloseIcon,
   CameraIcon,
+  LeftArrowIcon,
+  RightArrowIcon,
 };
 
 interface GeneralIconProps extends IconProps {

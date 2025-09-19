@@ -85,12 +85,12 @@ const Header = () => {
       ) : isLogin ? (
         <Link to="/register" className="flex items-center gap-2">
           <Icon type="UserIcon" />
-          <p className="text-primaryText text-xs">Register</p>
+          <p className="text-xs">Register</p>
         </Link>
       ) : (
         <Link to="/login" className="flex items-center gap-2">
           <Icon type="UserIcon" />
-          <p className="text-primaryText text-xs">Log in</p>
+          <p className="text-xs">Log in</p>
         </Link>
       )}
     </header>
