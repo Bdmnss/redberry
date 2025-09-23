@@ -1,5 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
-import { addProductToCart } from "./cart";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import {
+  addProductToCart,
+  getCart,
+  updateCartProductQuantity,
+  deleteCartProduct,
+} from "./cart";
+
 import { toast } from "react-hot-toast";
 
 interface UseAddToCartArgs {
@@ -8,6 +14,17 @@ interface UseAddToCartArgs {
   color: string;
   size: string;
   token?: string;
+}
+
+export interface UseUpdateCartProductQuantityArgs {
+  productId: number;
+  quantity: number;
+  token: string;
+}
+
+export interface UseDeleteCartProductArgs {
+  productId: number;
+  token: string;
 }
 
 export function useAddToCart() {
@@ -42,6 +59,34 @@ export function useAddToCart() {
       toast.success(
         `${variables.quantity} product${variables.quantity > 1 ? "s" : ""} added to cart`,
       );
+    },
+  });
+}
+
+export function useCart(token?: string, enabled: boolean = true) {
+  return useQuery({
+    queryKey: ["cart", token],
+    queryFn: () => getCart(token as string),
+    enabled: !!token && enabled,
+  });
+}
+
+export function useUpdateCartProductQuantity() {
+  return useMutation({
+    mutationFn: ({
+      productId,
+      quantity,
+      token,
+    }: UseUpdateCartProductQuantityArgs) => {
+      return updateCartProductQuantity(productId, quantity, token);
+    },
+  });
+}
+
+export function useDeleteCartProduct() {
+  return useMutation({
+    mutationFn: ({ productId, token }: UseDeleteCartProductArgs) => {
+      return deleteCartProduct(productId, token);
     },
   });
 }

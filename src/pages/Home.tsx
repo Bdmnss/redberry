@@ -27,8 +27,6 @@ export default function Home() {
   if (error) return <div>Error: {(error as Error).message}</div>;
   if (!data) return <div>No data available.</div>;
 
-  console.log(data);
-
   return (
     <main className="px-24 py-16">
       <HeaderFilters meta={data.meta} />
@@ -44,7 +42,7 @@ export default function Home() {
               <img
                 src={product.cover_image}
                 alt={product.name}
-                className="border-borderColor mb-3 w-full rounded-lg border-2 object-cover"
+                className="mb-3 w-full rounded-lg border-2 border-borderColor object-cover"
               />
               <h3 className="text-lg font-medium">{product.name}</h3>
               <p className="font-medium">$ {product.price}</p>

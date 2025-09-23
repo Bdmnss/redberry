@@ -25,3 +25,38 @@ export async function addProductToCart(
   );
   return response.data;
 }
+
+export async function getCart(token: string) {
+  const response = await axiosInstance.get("/cart", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function updateCartProductQuantity(
+  productId: number,
+  quantity: number,
+  token: string,
+) {
+  const response = await axiosInstance.patch(
+    `/cart/products/${productId}`,
+    { quantity },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+  return response.data;
+}
+
+export async function deleteCartProduct(productId: number, token: string) {
+  const response = await axiosInstance.delete(`/cart/products/${productId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}

@@ -17,7 +17,7 @@ const PriceFilterChip: React.FC<PriceFilterChipProps> = ({
   setSearchParams,
 }) => {
   return (
-    <div className="border-borderColor mt-4 inline-flex items-center rounded-full border bg-white px-4 py-2">
+    <div className="mt-4 inline-flex items-center rounded-full border border-borderColor bg-white px-4 py-2">
       <p>
         Price:{" "}
         {priceFromParam ? (
@@ -39,7 +39,7 @@ const PriceFilterChip: React.FC<PriceFilterChipProps> = ({
           });
         }}
       >
-        <Icon type="CloseIcon" className="ml-2 size-5" />
+        <Icon type="CloseIcon" className="ml-2 size-5 text-[#3E424A]" />
       </button>
     </div>
   );
