@@ -9,6 +9,7 @@ import type { IconProps } from "./iconType";
 import LeftArrowIcon from "./LeftArrowIcon";
 import LogoIcon from "./LogoIcon";
 import RightArrowIcon from "./RightArrowIcon";
+import TransparentCartIcon from "./TransparentCartIcon";
 import UserIcon from "./UserIcon";
 
 export type IconType =
@@ -22,7 +23,8 @@ export type IconType =
   | "CloseIcon"
   | "CameraIcon"
   | "LeftArrowIcon"
-  | "RightArrowIcon";
+  | "RightArrowIcon"
+  | "TransparentCartIcon";
 
 const iconMap = {
   LogoIcon,
@@ -36,6 +38,7 @@ const iconMap = {
   CameraIcon,
   LeftArrowIcon,
   RightArrowIcon,
+  TransparentCartIcon,
 };
 
 interface GeneralIconProps extends IconProps {

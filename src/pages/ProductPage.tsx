@@ -44,7 +44,7 @@ const ProductPage = () => {
   }
 
   return (
-    <main className="px-24 py-8">
+    <main className="px-24 pb-28 pt-8">
       <p className="mb-12 text-sm font-light">Listing / Product</p>
       <div className="flex gap-40">
         <ProductGallery product={data} selectedColor={selectedColor} />
@@ -60,6 +60,8 @@ const ProductPage = () => {
           setSelectedSize={setSelectedSize}
           quantity={quantity}
           setQuantity={setQuantity}
+          releaseYear={data.release_year}
+          description={data.description}
         />
       </div>
     </main>

@@ -1,6 +1,8 @@
 import ColorSelector from "./ColorSelector";
 import SizeSelector from "./SizeSelector";
 import QuantityDropdown from "./QuantityDropdown";
+import Button from "./Button";
+import Icon from "../icons/Icon";
 
 interface ProductOptionsProps {
   name: string;
@@ -13,6 +15,8 @@ interface ProductOptionsProps {
   setSelectedSize: (size: string) => void;
   quantity: number;
   setQuantity: (qty: number) => void;
+  releaseYear: string;
+  description: string;
 }
 
 const ProductOptions = ({
@@ -26,6 +30,8 @@ const ProductOptions = ({
   setSelectedSize,
   quantity,
   setQuantity,
+  releaseYear,
+  description,
 }: ProductOptionsProps) => {
   return (
     <div className="flex w-1/2 flex-col gap-14">
@@ -54,6 +60,19 @@ const ProductOptions = ({
           <span>Quantity</span>
           <QuantityDropdown value={quantity} onChange={setQuantity} />
         </div>
+
+        <div className="border-b border-borderColor pb-14">
+          <Button className="flex items-center justify-center gap-3">
+            <Icon type="TransparentCartIcon" />
+            <span>Add to Cart</span>
+          </Button>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-5">
+        <p className="text-xl font-medium">Details</p>
+        <p className="text-secondaryText">Release year: {releaseYear}</p>
+        <p className="text-secondaryText">{description}</p>
       </div>
     </div>
   );
