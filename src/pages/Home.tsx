@@ -36,7 +36,11 @@ export default function Home() {
       <div className="grid grid-cols-4 gap-6">
         {data.data.map((product) => {
           return (
-            <div key={product.id} className="mb-6 flex cursor-pointer flex-col">
+            <div
+              key={product.id}
+              className="mb-6 flex cursor-pointer flex-col"
+              onClick={() => (window.location.href = `/products/${product.id}`)}
+            >
               <img
                 src={product.cover_image}
                 alt={product.name}

@@ -46,7 +46,9 @@ const Header = () => {
   };
   return (
     <header className="flex items-center justify-between px-24 py-7">
-      <Icon type="LogoIcon" />
+      <div onClick={() => navigate("/")} className="cursor-pointer">
+        <Icon type="LogoIcon" />
+      </div>
       {isLoggedIn ? (
         <div className="flex items-center gap-5">
           <Icon type="CartIcon" />

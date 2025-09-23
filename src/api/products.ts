@@ -18,3 +18,8 @@ export async function getProducts(params: GetProductsParams = {}) {
   const response = await axiosInstance.get("/products", { params: query });
   return response.data;
 }
+
+export async function getProductById(id: number) {
+  const response = await axiosInstance.get(`/products/${id}`);
+  return response.data;
+}
