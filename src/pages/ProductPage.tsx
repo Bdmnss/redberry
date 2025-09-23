@@ -5,6 +5,7 @@ import type { Product } from "../types/types";
 import ProductGallery from "../components/ProductGallery";
 import { useState } from "react";
 import { getBorderStyle, getBackgroundColor } from "../utils/styles";
+import QuantityDropdown from "../components/QuantityDropdown";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -20,6 +21,8 @@ const ProductPage = () => {
   });
 
   const [selectedColor, setSelectedColor] = useState<string>("");
+  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [quantity, setQuantity] = useState<number>(1);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {(error as Error).message}</div>;
@@ -33,11 +36,20 @@ const ProductPage = () => {
     setSelectedColor(data.available_colors[0]);
   }
 
+  if (
+    selectedSize === "" &&
+    data.available_sizes &&
+    data.available_sizes.length > 0
+  ) {
+    setSelectedSize(data.available_sizes[0]);
+  }
+
   return (
     <main className="px-24 py-8">
       <p className="mb-12 text-sm font-light">Listing / Product</p>
       <div className="flex gap-40">
         <ProductGallery product={data} selectedColor={selectedColor} />
+
         <div className="flex w-1/2 flex-col gap-14">
           <div className="flex flex-col gap-5">
             <h1 className="text-3xl font-semibold">{data.name}</h1>
@@ -45,9 +57,9 @@ const ProductPage = () => {
           </div>
 
           <div className="flex flex-col gap-12">
-            <div className="flex flex-col gap-4">
-              <span>Color: {selectedColor}</span>
-              {data.available_colors && (
+            {data.available_colors && (
+              <div className="flex flex-col gap-4">
+                <span>Color: {selectedColor}</span>
                 <div className="flex items-center gap-3">
                   {data.available_colors.map((color) => (
                     <button
@@ -79,7 +91,33 @@ const ProductPage = () => {
                     </button>
                   ))}
                 </div>
-              )}
+              </div>
+            )}
+
+            {data.available_sizes && (
+              <div className="flex flex-col gap-4">
+                <span>Size: {selectedSize}</span>
+                <div className="flex items-center gap-2">
+                  {data.available_sizes.map((size) => (
+                    <button
+                      key={size}
+                      className={`flex h-11 w-16 items-center justify-center rounded-lg border text-primaryText ${
+                        size === selectedSize
+                          ? "border-primaryText"
+                          : "border-borderColor"
+                      } `}
+                      onClick={() => setSelectedSize(size)}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="flex flex-col gap-4">
+              <span>Quantity</span>
+              <QuantityDropdown value={quantity} onChange={setQuantity} />
             </div>
           </div>
         </div>
