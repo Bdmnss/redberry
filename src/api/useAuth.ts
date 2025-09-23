@@ -18,6 +18,9 @@ export function useRegisterMutation() {
       if (data?.user?.username) {
         localStorage.setItem("username", data.user.username);
       }
+      if (data?.user?.email) {
+        localStorage.setItem("email", data.user.email);
+      }
       navigate("/");
     },
     onError: (error: unknown) => {
@@ -64,6 +67,9 @@ export function useLoginMutation() {
       }
       if (data?.user?.username) {
         localStorage.setItem("username", data.user.username);
+      }
+      if (data?.user?.email) {
+        localStorage.setItem("email", data.user.email);
       }
       navigate("/");
     },

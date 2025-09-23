@@ -37,11 +37,14 @@ const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
     };
   };
 
+  const subtotal = data?.reduce((acc, product) => acc + product.total_price, 0);
+
   useEffect(() => {
     if (error) {
       localStorage.removeItem("avatar");
       localStorage.removeItem("token");
       localStorage.removeItem("username");
+      localStorage.removeItem("email");
     }
   }, [error]);
 
@@ -102,16 +105,35 @@ const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
         )}
 
         {!isLoading && !error && data?.length > 0 && (
-          <div className="flex flex-col gap-9">
-            {data.map((product) => (
-              <CartItem
-                key={product.id}
-                product={product}
-                token={token as string}
-                updateQuantity={updateQuantity}
-                deleteProduct={deleteProduct}
-              />
-            ))}
+          <div className="relative flex h-full flex-col">
+            <div className="flex flex-1 flex-col gap-9 overflow-y-auto pb-16 pr-3">
+              {data.map((product) => (
+                <CartItem
+                  key={product.id}
+                  product={product}
+                  token={token as string}
+                  updateQuantity={updateQuantity}
+                  deleteProduct={deleteProduct}
+                />
+              ))}
+            </div>
+            <div className="sticky bottom-0 flex w-full flex-col gap-24 bg-white pb-10 pr-2 pt-8">
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-secondaryText">Items subtotal</p>
+                  <p className="text-secondaryText">$ {subtotal}</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-secondaryText">Delivery</p>
+                  <p className="text-secondaryText">$ 5</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="text-xl font-medium">Total</p>
+                  <p className="text-xl font-medium">$ {subtotal + 5}</p>
+                </div>
+              </div>
+              <Button>Go to checkout</Button>
+            </div>
           </div>
         )}
       </aside>
