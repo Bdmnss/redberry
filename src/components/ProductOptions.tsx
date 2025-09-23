@@ -3,6 +3,8 @@ import SizeSelector from "./SizeSelector";
 import QuantityDropdown from "./QuantityDropdown";
 import Button from "./Button";
 import Icon from "../icons/Icon";
+import { Toaster } from "react-hot-toast";
+import { useAddToCart } from "../api/useCart";
 
 interface ProductOptionsProps {
   name: string;
@@ -17,6 +19,7 @@ interface ProductOptionsProps {
   setQuantity: (qty: number) => void;
   releaseYear: string;
   description: string;
+  productId?: number;
 }
 
 const ProductOptions = ({
@@ -32,9 +35,17 @@ const ProductOptions = ({
   setQuantity,
   releaseYear,
   description,
+  productId,
 }: ProductOptionsProps) => {
+  const mutation = useAddToCart();
+  const token =
+    typeof window !== "undefined"
+      ? localStorage.getItem("token") || undefined
+      : undefined;
+
   return (
     <div className="flex w-1/2 flex-col gap-14">
+      <Toaster position="top-right" />
       <div className="flex flex-col gap-5">
         <h1 className="text-3xl font-semibold">{name}</h1>
         <p className="text-3xl font-semibold">$ {price}</p>
@@ -62,9 +73,21 @@ const ProductOptions = ({
         </div>
 
         <div className="border-b border-borderColor pb-14">
-          <Button className="flex items-center justify-center gap-3">
+          <Button
+            className="flex items-center justify-center gap-3"
+            onClick={() =>
+              mutation.mutate({
+                productId,
+                quantity,
+                color: selectedColor,
+                size: selectedSize,
+                token,
+              })
+            }
+            disabled={mutation.isPending}
+          >
             <Icon type="TransparentCartIcon" />
-            <span>Add to Cart</span>
+            <span>{mutation.isPending ? "Adding..." : "Add to Cart"}</span>
           </Button>
         </div>
       </div>

@@ -62,6 +62,7 @@ const ProductPage = () => {
           setQuantity={setQuantity}
           releaseYear={data.release_year}
           description={data.description}
+          productId={productId}
         />
       </div>
     </main>

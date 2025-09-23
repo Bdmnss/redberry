@@ -37,6 +37,7 @@ export const getBackgroundColor = (color: string): string => {
     white: "#fff",
     multi: "#fff",
     "navy blue": "#1e3269",
+    peach: "#ffdab9",
     cream: "#f5e9da",
   };
 

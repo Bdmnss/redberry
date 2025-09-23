@@ -2,6 +2,7 @@ import type { ButtonHTMLAttributes } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 export default function Button({
@@ -11,7 +12,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`bg-buttonColor w-full rounded-lg py-3 text-white ${className}`}
+      className={`w-full rounded-lg bg-buttonColor py-3 text-white ${className}`}
       {...props}
     >
       {children}
