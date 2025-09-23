@@ -4,8 +4,7 @@ import { getProductById } from "../api/products";
 import type { Product } from "../types/types";
 import ProductGallery from "../components/ProductGallery";
 import { useState } from "react";
-import { getBorderStyle, getBackgroundColor } from "../utils/styles";
-import QuantityDropdown from "../components/QuantityDropdown";
+import ProductOptions from "../components/ProductOptions";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -50,77 +49,18 @@ const ProductPage = () => {
       <div className="flex gap-40">
         <ProductGallery product={data} selectedColor={selectedColor} />
 
-        <div className="flex w-1/2 flex-col gap-14">
-          <div className="flex flex-col gap-5">
-            <h1 className="text-3xl font-semibold">{data.name}</h1>
-            <p className="text-3xl font-semibold">$ {data.price}</p>
-          </div>
-
-          <div className="flex flex-col gap-12">
-            {data.available_colors && (
-              <div className="flex flex-col gap-4">
-                <span>Color: {selectedColor}</span>
-                <div className="flex items-center gap-3">
-                  {data.available_colors.map((color) => (
-                    <button
-                      key={color}
-                      onClick={() => setSelectedColor(color)}
-                      className="flex size-11 cursor-pointer items-center justify-center rounded-full bg-none p-0 outline-none transition-colors duration-200"
-                      style={{
-                        border: getBorderStyle(color, selectedColor),
-                      }}
-                    >
-                      <div
-                        className="flex size-9 items-center justify-center rounded-full"
-                        style={{
-                          backgroundColor: getBackgroundColor(color),
-                        }}
-                      >
-                        {["white", "multi"].includes(color.toLowerCase()) && (
-                          <span
-                            className="text-xs font-semibold"
-                            style={{
-                              color:
-                                selectedColor === color ? "#FF4000" : "#E1DFE1",
-                            }}
-                          >
-                            {color.charAt(0).toUpperCase() + color.slice(1)}
-                          </span>
-                        )}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {data.available_sizes && (
-              <div className="flex flex-col gap-4">
-                <span>Size: {selectedSize}</span>
-                <div className="flex items-center gap-2">
-                  {data.available_sizes.map((size) => (
-                    <button
-                      key={size}
-                      className={`flex h-11 w-16 items-center justify-center rounded-lg border text-primaryText ${
-                        size === selectedSize
-                          ? "border-primaryText"
-                          : "border-borderColor"
-                      } `}
-                      onClick={() => setSelectedSize(size)}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div className="flex flex-col gap-4">
-              <span>Quantity</span>
-              <QuantityDropdown value={quantity} onChange={setQuantity} />
-            </div>
-          </div>
-        </div>
+        <ProductOptions
+          name={data.name}
+          price={data.price}
+          availableColors={data.available_colors}
+          selectedColor={selectedColor}
+          setSelectedColor={setSelectedColor}
+          availableSizes={data.available_sizes}
+          selectedSize={selectedSize}
+          setSelectedSize={setSelectedSize}
+          quantity={quantity}
+          setQuantity={setQuantity}
+        />
       </div>
     </main>
   );
