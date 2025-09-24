@@ -1,69 +1,90 @@
-# React + TypeScript + Vite
+# Redberry E-commerce Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern RedSeam Clothing e-commerce frontend for Redberry, styled with Tailwind CSS. This project features product listing, filtering, sorting, cart management, and checkout, with API integration.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Product catalog with pagination
+- Price and sort filters
+- Cart drawer and checkout flow
+- Responsive design
+- API integration via environment variable
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- clsx, tailwind-merge
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 1. Clone the repository
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/Bdmnss/redberry.git
+cd redberry
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+### 3. Create your `.env` file
+
+Copy the contents of `.env.example` to a new `.env` file:
+
+```bash
+cp .env.example .env
+```
+
+> **Note:** The API base URL is set in `.env`. You can change it if needed.
+
+### 4. Start the development server
+
+```bash
+npm run dev
+```
+
+### 5. Build for production
+
+```bash
+npm run build
+```
+
+### 6. Run tests
+
+```bash
+npm test
+```
+
+## Folder Structure
+
+```
+├── public/           # Static assets
+├── src/
+│   ├── api/          # API hooks and requests
+│   ├── components/   # Reusable UI components
+│   ├── icons/        # SVG icon components
+│   ├── pages/        # Route pages
+│   ├── assets/       # Local images/icons
+│   ├── index.css     # Global styles
+│   └── main.tsx      # App entry point
+├── .env.example      # Example environment config
+├── package.json      # Project metadata
+├── tailwind.config.js
+├── vite.config.ts
+└── README.md         # Project documentation
+```
+
+## Environment Variables
+
+- `VITE_API_BASE_URL`: Base URL for API requests. Set this in your `.env` file.
+
+---
+
+> After cloning, always create a `.env` file and copy the contents from `.env.example` before running the project.
