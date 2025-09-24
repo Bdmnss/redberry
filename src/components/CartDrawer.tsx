@@ -100,7 +100,7 @@ const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
               You’ve got nothing in your cart just yet...
             </p>
 
-            <Button onClick={onClose}>Login</Button>
+            <Button onClick={onClose}>Start Shopping</Button>
           </div>
         )}
 
