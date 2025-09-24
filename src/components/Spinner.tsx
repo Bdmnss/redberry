@@ -5,8 +5,8 @@ interface SpinnerProps {
 }
 
 const Spinner: React.FC<SpinnerProps> = ({ isBig = false }) => {
-  const size = isBig ? 80 : 60;
-  const strokeWidth = isBig ? 8 : 6;
+  const size = isBig ? 120 : 60;
+  const strokeWidth = 4;
   return (
     <div className="flex h-full w-full items-center justify-center">
       <svg

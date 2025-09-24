@@ -84,7 +84,7 @@ const Header = () => {
                 <Icon type="DownArrowIcon" />
               </button>
               {dropdownOpen && (
-                <div className="animate-fade-in absolute right-0 top-12 z-20 min-w-[120px] rounded-lg border border-gray-100 bg-white py-2 shadow-lg">
+                <div className="animate-fade-in absolute right-0 top-12 z-20 min-w-[7.5rem] rounded-lg border border-gray-100 bg-white py-2 shadow-lg">
                   <button
                     className="w-full px-4 py-2 text-left text-sm font-medium text-buttonColor transition-colors hover:bg-gray-50"
                     onClick={handleLogout}

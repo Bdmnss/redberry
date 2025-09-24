@@ -105,7 +105,7 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({
         src={activeImage}
         alt={product.name}
         className={twMerge(
-          "max-h-[937px] opacity-100 transition-opacity duration-300",
+          "max-h-[58.5625rem] opacity-100 transition-opacity duration-300",
           fading && "opacity-0",
         )}
       />

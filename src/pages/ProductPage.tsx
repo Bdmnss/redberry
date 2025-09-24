@@ -5,6 +5,8 @@ import type { Product } from "../types/types";
 import ProductGallery from "../components/ProductGallery";
 import { useState } from "react";
 import ProductOptions from "../components/ProductOptions";
+import LoadingScreen from "../components/LoadingScreen";
+import ErrorScreen from "../components/ErrorScreen";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -23,9 +25,10 @@ const ProductPage = () => {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {(error as Error).message}</div>;
-  if (!data) return <div>Product not found.</div>;
+  if (isLoading) return <LoadingScreen />;
+  if (error)
+    return <ErrorScreen message={`Error: ${(error as Error).message}`} />;
+  if (!data) return <ErrorScreen message="Product not found." />;
 
   if (
     selectedColor === "" &&

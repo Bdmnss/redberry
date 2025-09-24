@@ -15,6 +15,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import SuccessModal from "../components/SuccessModal";
+import LoadingScreen from "../components/LoadingScreen";
+import ErrorScreen from "../components/ErrorScreen";
 
 const schema = z.object({
   email: z.string().email("Invalid email address").optional(),
@@ -65,8 +67,6 @@ const Checkout = () => {
 
   const subtotal = data?.reduce((acc, product) => acc + product.total_price, 0);
 
-  console.log(data, isLoading, error);
-
   const onSubmit = (formData: CartCheckoutBody) => {
     if (token) {
       const fixedFormData = { ...formData, email: formData.email ?? "" };
@@ -78,6 +78,16 @@ const Checkout = () => {
   const onClose = () => {
     window.location.href = "/";
   };
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+  if (error) {
+    return <ErrorScreen message={`Error: ${(error as Error).message}`} />;
+  }
+  if (!data) {
+    return <ErrorScreen message="No data available." />;
+  }
 
   return (
     <main className="relative px-24 py-16">
@@ -114,6 +124,7 @@ const Checkout = () => {
                   error={errors.address?.message}
                 />
                 <Input
+                  type="number"
                   label="Zip code"
                   {...register("zip_code")}
                   error={errors.zip_code?.message}
@@ -123,7 +134,7 @@ const Checkout = () => {
           </div>
           <div className="h-[39.6875rem] w-[28.75rem]">
             <div className="flex h-[21.9375rem] flex-1 flex-col gap-9 overflow-y-auto pr-2">
-              {(data ?? []).map((product) => (
+              {data.map((product) => (
                 <CartItem
                   key={`${product.id}-${product.size}`}
                   product={product}

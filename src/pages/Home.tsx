@@ -3,6 +3,8 @@ import { getProducts } from "../api/products";
 import { useSearchParams } from "react-router-dom";
 import HeaderFilters from "../components/HeaderFilters";
 import Pagination from "../components/Pagination";
+import LoadingScreen from "../components/LoadingScreen";
+import ErrorScreen from "../components/ErrorScreen";
 import type { ProductsResponse } from "../types/types";
 
 export default function Home() {
@@ -23,9 +25,10 @@ export default function Home() {
       }),
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {(error as Error).message}</div>;
-  if (!data) return <div>No data available.</div>;
+  if (isLoading) return <LoadingScreen />;
+  if (error)
+    return <ErrorScreen message={`Error: ${(error as Error).message}`} />;
+  if (!data) return <ErrorScreen message="No data available." />;
 
   return (
     <main className="px-24 py-16">

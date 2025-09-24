@@ -41,7 +41,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={`w-full rounded-lg border border-borderColor px-3 pb-2 pt-6 text-primaryText transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primaryText ${
               error ? "border-buttonColor" : ""
-            } ${isPassword ? "pr-10" : ""} ${isEmail ? "pl-10" : ""} ${className}`}
+            } ${isPassword ? "pr-10" : ""} ${isEmail ? "pl-10" : ""} ${className} ${type === "number" ? "hide-number-spin" : ""}`}
             type={type}
             onFocus={(e) => {
               setIsFocused(true);
