@@ -4,6 +4,7 @@ import {
   getCart,
   updateCartProductQuantity,
   deleteCartProduct,
+  postCartCheckout,
 } from "./cart";
 
 import { toast } from "react-hot-toast";
@@ -25,6 +26,14 @@ export interface UseUpdateCartProductQuantityArgs {
 export interface UseDeleteCartProductArgs {
   productId: number;
   token: string;
+}
+
+export interface CartCheckoutBody {
+  email?: string;
+  name: string;
+  surname: string;
+  address: string;
+  zip_code: string;
 }
 
 export function useAddToCart() {
@@ -88,5 +97,12 @@ export function useDeleteCartProduct() {
     mutationFn: ({ productId, token }: UseDeleteCartProductArgs) => {
       return deleteCartProduct(productId, token);
     },
+  });
+}
+
+export function useCartCheckout() {
+  return useMutation({
+    mutationFn: ({ token, body }: { token: string; body: CartCheckoutBody }) =>
+      postCartCheckout(token, body),
   });
 }

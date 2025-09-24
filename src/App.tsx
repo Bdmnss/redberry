@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Header from "./layout/Header";
 import ProductPage from "./pages/ProductPage";
+import Checkout from "./pages/Checkout";
 
 const Layout = () => (
   <>
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "", element: <Home /> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
+      { path: "checkout", element: <Checkout /> },
       { path: "products/:id", element: <ProductPage /> },
     ],
   },

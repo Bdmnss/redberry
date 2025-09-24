@@ -109,7 +109,7 @@ const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
             <div className="flex flex-1 flex-col gap-9 overflow-y-auto pb-16 pr-3">
               {data.map((product) => (
                 <CartItem
-                  key={product.id}
+                  key={`${product.id}-${product.size}`}
                   product={product}
                   token={token as string}
                   updateQuantity={updateQuantity}
@@ -132,7 +132,9 @@ const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
                   <p className="text-xl font-medium">$ {subtotal + 5}</p>
                 </div>
               </div>
-              <Button>Go to checkout</Button>
+              <Button onClick={() => (window.location.href = "/checkout")}>
+                Go to checkout
+              </Button>
             </div>
           </div>
         )}

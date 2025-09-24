@@ -1,4 +1,5 @@
 import axiosInstance from "../utils/axiosInstance";
+import type { CartCheckoutBody } from "./useCart";
 
 interface AddToCartBody {
   quantity: number;
@@ -54,6 +55,15 @@ export async function updateCartProductQuantity(
 
 export async function deleteCartProduct(productId: number, token: string) {
   const response = await axiosInstance.delete(`/cart/products/${productId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+}
+
+export async function postCartCheckout(token: string, body: CartCheckoutBody) {
+  const response = await axiosInstance.post("/cart/checkout", body, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

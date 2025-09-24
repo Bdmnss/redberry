@@ -2,6 +2,7 @@ import CameraIcon from "./CameraIcon";
 import CartIcon from "./CartIcon";
 import CloseIcon from "./CloseIcon";
 import DownArrowIcon from "./DownArrowIcon";
+import EmailIcon from "./EmailIcon";
 import EyeOff from "./EyeOff";
 import EyeOn from "./EyeOn";
 import FilterIcon from "./FilterIcon";
@@ -24,7 +25,8 @@ export type IconType =
   | "CameraIcon"
   | "LeftArrowIcon"
   | "RightArrowIcon"
-  | "TransparentCartIcon";
+  | "TransparentCartIcon"
+  | "EmailIcon";
 
 const iconMap = {
   LogoIcon,
@@ -39,6 +41,7 @@ const iconMap = {
   LeftArrowIcon,
   RightArrowIcon,
   TransparentCartIcon,
+  EmailIcon,
 };
 
 interface GeneralIconProps extends IconProps {
