@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import type { Product } from "../types/types";
 import { twMerge } from "tailwind-merge";
+import ProductImage from "./ProductImage";
 
 interface ProductGalleryProps {
   product: Product;
@@ -95,13 +96,12 @@ const ProductGallery: React.FC<ProductGalleryProps> = ({
             )}
             onClick={() => selectImage(image)}
           >
-            <img src={image} alt={product.name} className="w-full" />
+            <ProductImage src={image} alt={product.name} className="w-full" />
           </li>
         ))}
       </ul>
 
-      <img
-        ref={mainImageRef}
+      <ProductImage
         src={activeImage}
         alt={product.name}
         className={twMerge(

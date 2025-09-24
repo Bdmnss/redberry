@@ -4,6 +4,7 @@ import type {
   UseDeleteCartProductArgs,
   UseUpdateCartProductQuantityArgs,
 } from "../api/useCart";
+import ProductImage from "./ProductImage";
 
 interface CartItemProps {
   product: CartProduct;
@@ -35,7 +36,7 @@ const CartItem = ({
 
   return (
     <div className="flex items-center gap-4">
-      <img
+      <ProductImage
         src={imageSrc}
         alt={product.name}
         className="h-32 w-24 cursor-pointer rounded-lg border border-borderColor object-cover"

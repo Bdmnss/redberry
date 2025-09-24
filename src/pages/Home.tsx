@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 import LoadingScreen from "../components/LoadingScreen";
 import ErrorScreen from "../components/ErrorScreen";
 import type { ProductsResponse } from "../types/types";
+import ProductImage from "../components/ProductImage";
 
 export default function Home() {
   useEffect(() => {
@@ -47,7 +48,7 @@ export default function Home() {
               className="mb-6 flex cursor-pointer flex-col"
               onClick={() => (window.location.href = `/products/${product.id}`)}
             >
-              <img
+              <ProductImage
                 src={product.cover_image}
                 alt={product.name}
                 className="mb-3 w-full rounded-lg border-2 border-borderColor object-cover"
