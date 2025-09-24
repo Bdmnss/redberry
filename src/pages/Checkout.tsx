@@ -49,14 +49,16 @@ const Checkout = () => {
     },
   });
 
+  const token = localStorage.getItem("token") ?? undefined;
   useEffect(() => {
+    if (!token) {
+      window.location.href = "/login";
+    }
     if (updateQuantity.isSuccess || deleteProduct.isSuccess) {
       queryClient.invalidateQueries({ queryKey: ["cart", token] });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateQuantity.isSuccess, deleteProduct.isSuccess, queryClient]);
+  }, [token, updateQuantity.isSuccess, deleteProduct.isSuccess, queryClient]);
 
-  const token = localStorage.getItem("token") ?? undefined;
   const { data, isLoading, error } = useCart(token) as {
     data: CartProduct[];
     isLoading: boolean;
@@ -87,6 +89,25 @@ const Checkout = () => {
   }
   if (!data) {
     return <ErrorScreen message="No data available." />;
+  }
+
+  if (data.length === 0) {
+    return (
+      <div className="flex h-[39.6875rem] w-full flex-col items-center justify-center">
+        <img
+          src="/cart-image.png"
+          alt="cart image"
+          className="mb-10 h-52 w-64"
+        />
+        <p className="mb-6 text-4xl font-bold">Ooops!</p>
+        <p className="mb-20 text-lg text-secondaryText">
+          You’ve got nothing in your cart just yet...
+        </p>
+        <Button className="h-16 w-64 text-xl font-semibold" onClick={onClose}>
+          Start Shopping
+        </Button>
+      </div>
+    );
   }
 
   return (
