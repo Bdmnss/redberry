@@ -24,6 +24,10 @@ const schema = z
   });
 
 export default function Register() {
+  useEffect(() => {
+    document.title = "RedSeam | Register";
+  }, []);
+
   const [avatar, setAvatar] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

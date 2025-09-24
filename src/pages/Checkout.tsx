@@ -27,6 +27,10 @@ const schema = z.object({
 });
 
 const Checkout = () => {
+  useEffect(() => {
+    document.title = "RedSeam | Checkout";
+  }, []);
+
   const [isSuccess, setIsSuccess] = useState(false);
 
   const deleteProduct = useDeleteCartProduct();

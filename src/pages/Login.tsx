@@ -15,6 +15,10 @@ const schema = z.object({
 });
 
 export default function Login() {
+  useEffect(() => {
+    document.title = "RedSeam | Login";
+  }, []);
+
   type FormData = z.infer<typeof schema>;
 
   const {

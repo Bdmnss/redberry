@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "../api/products";
 import { useSearchParams } from "react-router-dom";
@@ -8,6 +9,10 @@ import ErrorScreen from "../components/ErrorScreen";
 import type { ProductsResponse } from "../types/types";
 
 export default function Home() {
+  useEffect(() => {
+    document.title = "RedSeam | Products";
+  }, []);
+
   const [searchParams] = useSearchParams();
   const priceFromParam = searchParams.get("filter[price_from]") || "";
   const priceToParam = searchParams.get("filter[price_to]") || "";

@@ -3,12 +3,16 @@ import { useQuery } from "@tanstack/react-query";
 import { getProductById } from "../api/products";
 import type { Product } from "../types/types";
 import ProductGallery from "../components/ProductGallery";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductOptions from "../components/ProductOptions";
 import LoadingScreen from "../components/LoadingScreen";
 import ErrorScreen from "../components/ErrorScreen";
 
 const ProductPage = () => {
+  useEffect(() => {
+    document.title = "RedSeam | Product";
+  }, []);
+
   const { id } = useParams();
   const productId = id ? Number(id) : undefined;
 
