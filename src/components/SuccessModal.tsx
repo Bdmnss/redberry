@@ -16,7 +16,7 @@ const SuccessModal = ({ onClose }: SuccessModalProps) => (
       <p className="mb-20 text-sm text-secondaryText">
         Your order is placed successfully!
       </p>
-      <Button onClick={onClose} className="w-52">
+      <Button onClick={onClose} className="w-[13rem]">
         Continue shopping
       </Button>
     </div>
