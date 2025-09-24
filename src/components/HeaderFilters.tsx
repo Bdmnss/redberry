@@ -18,7 +18,16 @@ export default function HeaderFilters({
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [priceFrom, setPriceFrom] = useState<string>(priceFromParam);
   const [priceTo, setPriceTo] = useState<string>(priceToParam);
-  const [sortLabel, setSortLabel] = useState("Sort by");
+  const SORT_OPTIONS = [
+    { value: "created_at", label: "New products first" },
+    { value: "price", label: "Price, low to high" },
+    { value: "-price", label: "Price, high to low" },
+  ];
+
+  const sortValue = searchParams.get("sort");
+  const currentSortLabel =
+    SORT_OPTIONS.find((opt) => opt.value === sortValue)?.label || "Sort by";
+  const [sortLabel, setSortLabel] = useState(currentSortLabel);
 
   const filterRef = useRef<HTMLFormElement>(null);
   const sortRef = useRef<HTMLDivElement>(null);
@@ -46,12 +55,16 @@ export default function HeaderFilters({
     };
   }, [isFilterOpen, isSortOpen]);
 
+  useEffect(() => {
+    setSortLabel(currentSortLabel);
+  }, [currentSortLabel, sortValue]);
+
   return (
     <div className="mb-8">
       <div className="mb-5 flex items-center justify-between">
         <h1 className="text-4xl font-semibold">Products</h1>
         <div className="flex items-center">
-          <p className="text-secondaryText border-r-borderColor border-r pr-8 text-xs">
+          <p className="border-r border-r-borderColor pr-8 text-xs text-secondaryText">
             Showing {from}-{to} of {total} results
           </p>
           <div className="relative mr-8 flex items-center pl-8">
