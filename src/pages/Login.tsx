@@ -49,13 +49,15 @@ export default function Login() {
         <div className="flex flex-col gap-6">
           <Input
             type="text"
-            placeholder="Email"
+            label="Email"
+            required
             error={errors.email?.message}
             {...register("email")}
           />
           <Input
             isPassword
-            placeholder="Password"
+            label="Password"
+            required
             error={errors.password?.message}
             {...register("password")}
           />

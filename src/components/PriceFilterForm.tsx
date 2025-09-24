@@ -25,7 +25,7 @@ const PriceFilterForm: React.FC<PriceFilterFormProps> = ({
   return (
     <form
       ref={filterRef}
-      className="border-borderColor absolute right-0 top-9 w-[392px] rounded-lg border bg-white p-4"
+      className="absolute right-0 top-9 w-[392px] rounded-lg border border-borderColor bg-white p-4"
       onSubmit={(e) => {
         e.preventDefault();
         const params: Record<string, string> = {};
@@ -38,12 +38,14 @@ const PriceFilterForm: React.FC<PriceFilterFormProps> = ({
       <p className="mb-5 font-semibold">Select price</p>
       <div className="mb-2 flex items-center gap-2">
         <Input
-          placeholder="From"
+          label="From"
+          required
           value={priceFrom}
           onChange={(e) => setPriceFrom(e.target.value.replace(/[^\d]/g, ""))}
         />
         <Input
-          placeholder="To"
+          label="To"
+          required
           value={priceTo}
           onChange={(e) => setPriceTo(e.target.value.replace(/[^\d]/g, ""))}
         />

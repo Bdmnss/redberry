@@ -70,7 +70,7 @@ export default function Register() {
             />
           ) : (
             <div
-              className="border-borderColor hover:border-buttonColor flex size-24 cursor-pointer items-center justify-center rounded-full border"
+              className="flex size-24 cursor-pointer items-center justify-center rounded-full border border-borderColor hover:border-buttonColor"
               onClick={() => fileInputRef.current?.click()}
             >
               <Icon type="CameraIcon" />
@@ -107,25 +107,29 @@ export default function Register() {
         <div className="flex flex-col gap-6">
           <Input
             type="text"
-            placeholder="Username"
+            label="Username"
+            required
             error={errors.username?.message}
             {...register("username")}
           />
           <Input
             type="text"
-            placeholder="Email"
+            label="Email"
+            required
             error={errors.email?.message}
             {...register("email")}
           />
           <Input
             isPassword
-            placeholder="Password"
+            label="Password"
+            required
             error={errors.password?.message}
             {...register("password")}
           />
           <Input
             isPassword
-            placeholder="Confirm Password"
+            label="Confirm Password"
+            required
             error={errors.confirmPassword?.message}
             {...register("confirmPassword")}
           />
