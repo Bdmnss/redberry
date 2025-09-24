@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import DownArrowIcon from "../icons/DownArrowIcon";
+import { twMerge, twJoin } from "tailwind-merge";
 
 interface QuantityDropdownProps {
   value: number;
@@ -34,7 +35,12 @@ const QuantityDropdown = ({ value, onChange }: QuantityDropdownProps) => {
       >
         <span className="font-medium">{value}</span>
         <DownArrowIcon
-          className={`ml-2 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`}
+          className={twMerge(
+            twJoin(
+              "ml-2 transition-transform duration-200",
+              dropdownOpen ? "rotate-180" : "",
+            ),
+          )}
         />
       </button>
       {dropdownOpen && (
@@ -42,9 +48,12 @@ const QuantityDropdown = ({ value, onChange }: QuantityDropdownProps) => {
           {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
             <button
               key={num}
-              className={`w-full px-4 py-2 text-left transition-colors hover:bg-gray-100 ${
-                num === value ? "bg-gray-100 font-semibold" : ""
-              }`}
+              className={twMerge(
+                twJoin(
+                  "w-full px-4 py-2 text-left transition-colors hover:bg-gray-100",
+                  num === value ? "bg-gray-100 font-semibold" : "",
+                ),
+              )}
               onClick={() => {
                 onChange(num);
                 setDropdownOpen(false);

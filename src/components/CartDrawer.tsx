@@ -7,6 +7,8 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import Icon from "../icons/Icon";
 import Button from "./Button";
+import { twMerge } from "tailwind-merge";
+import { twJoin } from "tailwind-merge";
 import Spinner from "./Spinner";
 import type { CartProduct } from "../types/types";
 import CartItem from "./CartItem";
@@ -57,7 +59,12 @@ const CartDrawer = ({ open, onClose }: CartDrawerProps) => {
         />
       )}
       <aside
-        className={`fixed right-0 top-0 z-50 h-full w-[33.75rem] transform bg-white p-10 shadow-2xl ${open ? "translate-x-0" : "translate-x-full"} transition-transform duration-300 ease-in-out`}
+        className={twMerge(
+          twJoin(
+            "fixed right-0 top-0 z-50 h-full w-[33.75rem] transform bg-white p-10 shadow-2xl transition-transform duration-300 ease-in-out",
+            open ? "translate-x-0" : "translate-x-full",
+          ),
+        )}
       >
         {isLoading && <Spinner />}
 

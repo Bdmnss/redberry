@@ -2,6 +2,7 @@ import { type InputHTMLAttributes, forwardRef, useState } from "react";
 import EyeOn from "../icons/EyeOn";
 import EyeOff from "../icons/EyeOff";
 import Icon from "../icons/Icon";
+import { twMerge, twJoin } from "tailwind-merge";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
@@ -39,9 +40,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
           <input
             ref={ref}
-            className={`w-full rounded-lg border border-borderColor px-3 pb-2 pt-6 text-primaryText transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primaryText ${
-              error ? "border-buttonColor" : ""
-            } ${isPassword ? "pr-10" : ""} ${isEmail ? "pl-10" : ""} ${className} ${type === "number" ? "hide-number-spin" : ""}`}
+            className={twMerge(
+              twJoin(
+                "w-full rounded-lg border border-borderColor px-3 pb-2 pt-6 text-primaryText transition-all duration-200 focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primaryText",
+                error ? "border-buttonColor" : "",
+                isPassword ? "pr-10" : "",
+                isEmail ? "pl-10" : "",
+                className,
+                type === "number" ? "hide-number-spin" : "",
+              ),
+            )}
             type={type}
             onFocus={(e) => {
               setIsFocused(true);
@@ -56,11 +64,16 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
           {label && (
             <label
-              className={`pointer-events-none absolute left-3 transition-all duration-200 ${
-                isLabelFloating
-                  ? "top-1 text-xs text-secondaryText"
-                  : "top-1/2 -translate-y-1/2 text-base text-secondaryText"
-              } ${isEmail ? "pl-7" : ""} ${error ? "text-buttonColor" : ""}`}
+              className={twMerge(
+                twJoin(
+                  "pointer-events-none absolute left-3 transition-all duration-200",
+                  isLabelFloating
+                    ? "top-1 text-xs text-secondaryText"
+                    : "top-1/2 -translate-y-1/2 text-base text-secondaryText",
+                  isEmail ? "pl-7" : "",
+                  error ? "text-buttonColor" : "",
+                ),
+              )}
             >
               {label}
               {required && <span className="ml-1 text-buttonColor">*</span>}

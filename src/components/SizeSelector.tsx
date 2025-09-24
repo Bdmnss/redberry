@@ -1,3 +1,5 @@
+import { twMerge, twJoin } from "tailwind-merge";
+
 interface SizeSelectorProps {
   availableSizes: string[];
   selectedSize: string;
@@ -16,11 +18,14 @@ const SizeSelector = ({
         {availableSizes.map((size) => (
           <button
             key={size}
-            className={`flex h-11 w-16 items-center justify-center rounded-lg border text-primaryText ${
-              size === selectedSize
-                ? "border-primaryText"
-                : "border-borderColor"
-            } `}
+            className={twMerge(
+              twJoin(
+                "flex h-11 w-16 items-center justify-center rounded-lg border text-primaryText",
+                size === selectedSize
+                  ? "border-primaryText"
+                  : "border-borderColor",
+              ),
+            )}
             onClick={() => setSelectedSize(size)}
           >
             {size}
