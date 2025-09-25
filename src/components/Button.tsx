@@ -1,4 +1,6 @@
 import type { ButtonHTMLAttributes } from "react";
+import { twMerge } from "tailwind-merge";
+import { twJoin } from "tailwind-merge";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -12,7 +14,9 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`w-full rounded-lg bg-buttonColor py-3 text-white ${className}`}
+      className={twMerge(
+        twJoin("w-full rounded-lg bg-buttonColor py-3 text-white", className),
+      )}
       {...props}
     >
       {children}

@@ -25,7 +25,7 @@ const PriceFilterForm: React.FC<PriceFilterFormProps> = ({
   return (
     <form
       ref={filterRef}
-      className="absolute right-0 top-9 w-[24.5rem] rounded-lg border border-borderColor bg-white p-4"
+      className="absolute right-0 top-9 z-10 w-[24.5rem] rounded-lg border border-borderColor bg-white p-4"
       onSubmit={(e) => {
         e.preventDefault();
         const params: Record<string, string> = {};

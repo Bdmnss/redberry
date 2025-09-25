@@ -24,7 +24,7 @@ const SortFilterDropdown: React.FC<SortFilterDropdownProps> = ({
 
   return (
     <div ref={sortRef}>
-      <div className="absolute right-0 top-9 flex w-56 flex-col gap-2 rounded-lg border border-borderColor bg-white py-4">
+      <div className="absolute right-0 top-9 z-10 flex w-56 flex-col gap-2 rounded-lg border border-borderColor bg-white py-4">
         <h3 className="pl-4 font-semibold">Sort by</h3>
         {SORT_OPTIONS.map((option) => {
           const isSelected = selectedSort === option.value;
